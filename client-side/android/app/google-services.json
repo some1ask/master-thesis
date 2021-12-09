@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "421990566980",
+    "project_id": "master-thesis-8eb4f",
+    "storage_bucket": "master-thesis-8eb4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421990566980:android:d66685b4ee95557db80011",
+        "android_client_info": {
+          "package_name": "com.ipz.masterThesis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421990566980-6bi0o22007pk11ptediuq5futs3sgbm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqIrQGvNTOMR4suAUkx2Ag8gVFdBjLRCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421990566980-6bi0o22007pk11ptediuq5futs3sgbm4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
