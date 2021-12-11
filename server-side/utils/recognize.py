@@ -1,6 +1,4 @@
-from typing import Text
-from numpy.core.fromnumeric import partition
-from numpy.lib.utils import source
+
 import pytesseract
 import numpy as np
 import cv2

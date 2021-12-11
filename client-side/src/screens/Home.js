@@ -7,10 +7,14 @@ import {
   Dimensions,
   ScrollView,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
+  Share 
 } from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Clipboard from '@react-native-clipboard/clipboard';
+// import RNShareFile from 'react-native-share-pdf';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 
@@ -34,7 +38,40 @@ const Home = () => {
     })
     },[myData])
   const tabBarHeight = useBottomTabBarHeight();
-
+    const html = text =>{
+      return `<div><span>${text}</span></div>`;
+    }
+    const isPermitted = async () => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            {
+              title: 'External Storage Write Permission',
+              message: 'App needs access to Storage data',
+            },
+          );
+          return granted === PermissionsAndroid.RESULTS.GRANTED;
+        } catch (err) {
+          alert('Write permission err', err);
+          return false;
+        }
+    };
+  const createPDF = async(value)=>{
+    if (await isPermitted()) {
+  let options = {
+    html:value,
+    fileName:new Date().toLocaleString(),
+    directory: 'Documents',
+  };
+  let file = await RNHTMLtoPDF.convert(options)
+  console.log(file)
+  if(file)
+  {
+    const showError = await RNShareFile.sharePDF("",`file//${file.fileName}`)
+  }
+    
+}
+  }
   return (
     <View style={styles.container}>
       {/* Scrollable Content */}
@@ -63,6 +100,8 @@ const Home = () => {
                     
                     <View style={styles.iconRow}>
                     <Icon  name='remove-circle-outline' color='#FA8072' size={46} onPress={()=>{deleteText(item.text)}}/>
+                    <Icon  name='create' color='#FA8072' size={46} onPress={()=>{createPDF(html(item.text))}}/>
+                    
                   </View>
                   </View>
                   
@@ -113,6 +152,7 @@ const styles = StyleSheet.create({
   },
   iconRow:{
     alignSelf:'center',
+    justifyContent:'center',
     marginTop:10,
     borderWidth:1,
     borderColor:"#000"

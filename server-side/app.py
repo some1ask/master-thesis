@@ -1,14 +1,12 @@
-from flask import Flask, json, request, jsonify, Response
-from numpy import result_type
+from flask import Flask, request, jsonify
 import pytesseract
-from markupsafe import escape
 from utils.recognize import recs
 pytesseract.pytesseract.tesseract_cmd=r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 app = Flask(__name__)
 
 @app.route("/<userID>",methods=['GET','POST'])
-def run(userID):
+def ocr(userID):
     if request.method == 'POST':
         # print(request['firstParam'])
         data = request.get_json(); 
