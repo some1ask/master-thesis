@@ -8,15 +8,14 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
-  Share 
+  Alert
 } from 'react-native';
 import { PermissionsAndroid } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Clipboard from '@react-native-clipboard/clipboard';
-// import RNShareFile from 'react-native-share-pdf';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-
+import RNShareFile from 'react-native-share-pdf';
 
 import { useEffect } from 'react';
 import { getData, user,deleteText} from '../network/userRequests';
@@ -64,14 +63,11 @@ const Home = () => {
     directory: 'Documents',
   };
   let file = await RNHTMLtoPDF.convert(options)
-  console.log(file)
-  if(file)
-  {
-    const showError = await RNShareFile.sharePDF("",`file//${file.fileName}`)
-  }
-    
+   
+   Alert.alert("Файл збережено!",`Файл знаходиться у: ${file.filePath}`);
 }
-  }
+
+}
   return (
     <View style={styles.container}>
       {/* Scrollable Content */}
@@ -99,10 +95,9 @@ const Home = () => {
                     </ScrollView>
                     
                     <View style={styles.iconRow}>
-                    <Icon  name='remove-circle-outline' color='#FA8072' size={46} onPress={()=>{deleteText(item.text)}}/>
-                    <Icon  name='create' color='#FA8072' size={46} onPress={()=>{createPDF(html(item.text))}}/>
-                    
-                  </View>
+                      <Icon  name='remove-circle-outline' color='#FA8072' size={46} onPress={()=>{deleteText(item.text)}}/>
+                      <Icon  name='save' color='#FA8072' size={46} onPress={()=>{createPDF(html(item.text))}}/>
+                    </View>
                   </View>
                   
                   </View>
@@ -151,10 +146,11 @@ const styles = StyleSheet.create({
 
   },
   iconRow:{
-    alignSelf:'center',
+    flex:1,
+    // alignSelf:'center',
+    flexDirection:'row',
     justifyContent:'center',
     marginTop:10,
-    borderWidth:1,
     borderColor:"#000"
   },
   scrollContentContainer: {
@@ -171,16 +167,15 @@ const styles = StyleSheet.create({
   rectcontainer:{
     flex:1,
     alignItems:'center',
-
-    
   },
   rect: {
     width:ITEM_WIDTH,
     backgroundColor: "rgba(255,255,255,1)",
     borderWidth: 1,
+    borderRadius:15,
     borderColor: "#000000",
     marginHorizontal:20,
-    marginTop:10
+    marginTop:20
   },
   loremIpsum: {
     fontFamily: "roboto-regular",

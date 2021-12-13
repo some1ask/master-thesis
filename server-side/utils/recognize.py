@@ -124,17 +124,14 @@ def find_contours(img,contours,language):
     config = ('--oem 3 --psm 3')
     result=""
     for cnt in contours: 
-        x, y, w, h = cv2.boundingRect(cnt) 
-
+        x, y, w, h = cv2.boundingRect(cnt)
         # drawing a rectangle on copied image 
         rect = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 255), 2) 
         # use for debugging
         # cv2.imshow('cnt',rect)
         # cv2.waitKey()
-
         # cropped image fro tesseract 
         cropped = img[y:y + h, x:x + w] 
-
         # apply tesseract on rect part 
         if language == 'ukr':
             result = result + pytesseract.image_to_string(cropped, config=config,lang='ukr')

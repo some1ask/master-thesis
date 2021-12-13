@@ -28,8 +28,7 @@ const registerUser = async()=>{
     }
     catch(e){
         console.warn(e)
-    }
-   
+    } 
 } 
 const sendPicture = async(bodyObject) =>{
     try{

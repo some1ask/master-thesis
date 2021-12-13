@@ -1,18 +1,15 @@
 import React, {useState} from 'react';
 import {
   View,
-  Text,
-  TouchableOpacity,
-  Alert,
   Image,
   StyleSheet,
   Button,
+  ActivityIndicator
 } from 'react-native';
 import { PermissionsAndroid } from 'react-native';
 import { pickerLanguages } from '../assets/pickerLanguages';
 import { Picker } from '@react-native-picker/picker';
 import Icon from "react-native-vector-icons/FontAwesome";
-import MaterialIconsIcon from "react-native-vector-icons/MaterialIcons";
 import * as ImagePicker from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { addText, sendPicture, uniqueID } from '../network/userRequests';
@@ -22,6 +19,7 @@ const ImagePickerComponent = () =>{
     const [imageSource, setImageSource] = useState(null);
     const [selectedLanguage,setSelectedLanguage] = useState(pickerLanguages[0].value);
     const [bodyObject,setBodyObject] = useState({"language":selectedLanguage});
+    const [isSend,setIsSend] = useState(false);
 
     const navigation = useNavigation();
 
@@ -102,20 +100,32 @@ const ImagePickerComponent = () =>{
         }      
       </Picker>
       </View>
+      <View style={styles.button}>
       <Button
+      
   onPress={()=>{
+    setIsSend(true);
     sendPicture(bodyObject).then(data =>{
       addText(data.recognizedText).then(navigation.navigate("Home"))
     }).then(()=>{
       setImageSource("")
+      setIsSend(false);
     })
    
-    console.log('hey ya');
   }}
-  title="Learn More"
-  color="#841584"
+  title="Відправити текст"
+  color="#056469"
   accessibilityLabel="Learn more about this purple button"
 />
+{
+  isSend ? <ActivityIndicator
+  color="#056469"
+  size="large"
+  style={styles.activityIndicator}
+  ></ActivityIndicator> : <></>
+}
+
+</View>
     </View>
             </>
           ) : (<></>)}
@@ -139,10 +149,18 @@ const styles = StyleSheet.create({
   rect: {
     width: 291,
     height: 135,
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,1)",
     marginTop: 45,
     marginHorizontal:135
+  },
+  activityIndicator: {
+    flex:1,
+    marginTop: 95,
+  },
+  button:{
+    // alignSelf:'center',
+    // marginHorizontal:120,
+    left:150,
+    marginTop:50
   },
   icon2: {
     color: "rgba(21,121,137,1)",
@@ -163,9 +181,9 @@ const styles = StyleSheet.create({
   rect2: {
     width: 324,
     height: 245,
-    borderWidth: 1,
+  
     marginLeft:115,
-    borderColor: "#000000",
+  
     marginTop: 104
   },
   image: {

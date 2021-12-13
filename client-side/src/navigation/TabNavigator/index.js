@@ -13,10 +13,10 @@ const TabNavigator = () => {
     let iconName;
 
     switch (route.name) {
-      case 'Home':
+      case 'Тексти':
         iconName = 'file-text';
         break;
-      case 'Image Picker Screen':
+      case 'Розпізнати':
         iconName = 'camera';
         break;
       default:
@@ -34,8 +34,8 @@ const TabNavigator = () => {
         tabBarStyle:{backgroundColor:"#0C3F48"},
       })}>
      
-      <Tab.Screen name="Image Picker Screen" component={ImagePickerScreen} tabBarItemStyle={{color:'#fff'}}/>
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Розпізнати" component={ImagePickerScreen} tabBarItemStyle={{color:'#fff'}}/>
+      <Tab.Screen name="Тексти" component={Home} />
     </Tab.Navigator>
   );
 };
